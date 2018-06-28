@@ -160,13 +160,73 @@ load('불러올 파일')
 write.csv(CO2, file = 'CO2.csv')
 write.csv(CO2, file='CO2.csv',
           row.names = F)
+write.table(CO2, 'CO2_Table.csv',
+            row.names = F,
+            sep='~')
+read.csv('CO2_Table.csv',  #read.csv는 
+         sep='~')          #read.table의 sep가 ,로 default된 경우
+read.table('CO2_Table.csv', sep='~')
+
+
+
+##read.table 옵션 
+
 str(CO2)
-coco2 <- read.csv('CO2.csv', header = T)
-str(coco2)
+
+
+coco2 <- read.csv('CO2.csv', header = T) #stringAsFactor=F를 안하면
+str(coco2)                               #chr가 모두 factor가 됨 
+co2 <- read.table('CO2.csv', header = T, sep=',',
+                  stringsAsFactors = F)
+str(co2)
+
+
+cococo2 <- read.table('CO2.csv', header = T, sep=',',
+                      stringsAsFactors = F,
+                      colClasses = 
+                        c('character', 'factor', 'factor',
+                          'integer', 'numeric')) 
+                        #colClasses로 데이터타입을 모두 지정할 수 있음
+str(cococo2)
+
+read.table('CO2.csv', sep=',', header = T,
+           stringsAsFactors = F,
+           colClasses = 
+             c('character', 'factor', 'factor',
+               'integer', 'numeric'),
+           nrow = 5)  #row개수 : 5개만 꺼내라
+
+##제목 빼고 앞에 있는 몇 개의 행 제외하기
+co2_5 <- read.table('CO2.csv', sep=',', header = F,
+           stringsAsFactors = F,
+           colClasses = 
+             c('character', 'factor', 'factor',
+               'integer', 'numeric'),
+           nrow = 5,
+           skip = 2)  
+head <- read.table('CO2.csv', sep=',', header = F,
+                   stringsAsFactors = F,
+                   nrow = 1)
+head
+str(co2_5)
+colnames(co2_5) = head
+co2_5
 
 
 
+##엑셀 읽어오기
+install.packages('xlsx')
+library(xlsx)
+install.packages('rJava')
+library(rJava)
 
 
+
+##
+list.files() # 현재 작업하고있는 working directory안의 파일을 보여줌
+a = list.files()
+a[1]
+
+list.dirs(recursive = F) #하위 폴더
 
 
